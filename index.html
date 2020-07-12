@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8" />
+	<title>SOLJIK</title>
+	<meta name="keywords" content="HTML5,CSS3,Template" />
+	<meta name="description" content="" />
+	<meta name="Author" content="Dorin Grigoras [www.stepofweb.com]" />
+	<meta name="viewport" content="width=device-width, maximum-scale=1, initial-scale=1, user-scalable=0" />
+	<!-- Google css -->
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400%7CRaleway:300,400,500,600,700%7CLato:300,400,400italic,600,700" rel="stylesheet" type="text/css" />
+
+	
+
+	<!-- Base CSS DATATABLES -->
+	<link href="assets/css/layout-datatables.css" rel="stylesheet" type="text/css" />
+
+
+	<!-- Asset css -->
+	<link href="assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+	<link href="assets/plugins/slider.swiper/dist/css/swiper.min.css" rel="stylesheet" type="text/css" />
+	<link href="assets/css/essentials.css" rel="stylesheet" type="text/css" />
+	<link href="assets/css/layout.css" rel="stylesheet" type="text/css" />
+	<link href="assets/css/header-1.css" rel="stylesheet" type="text/css" />
+	<link href="assets/css/color_scheme/green.css" rel="stylesheet" type="text/css" id="color_scheme" />
+
+	<!-- Bootstrap css-->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+	<link rel="stylesheet" href="assets/plugins/bootstrap.datepicker/css/bootstrap-datepicker.min.css">
+
+
+	<style type="text/css">
+		.search {
+			position: absolute;
+			z-index: 1000;
+			top: 20px;
+			left: 20px;
+		}
+
+		.search #address {
+			width: 150px;
+			height: 20px;
+			line-height: 20px;
+			border: solid 1px #555;
+			padding: 5px;
+			font-size: 12px;
+			box-sizing: content-box;
+		}
+
+		.search #submit {
+			height: 30px;
+			line-height: 30px;
+			padding: 0 10px;
+			font-size: 12px;
+			border: solid 1px #555;
+			border-radius: 3px;
+			cursor: pointer;
+			box-sizing: content-box;
+		}
+	</style>
+
+
+
+</head>
+
+<body class="enable-animation">
+	<div id="wrapper">
+		<div id="header" class="sticky header-md clearfix">
+
+			<!-- TOP NAV -->
+			<header id="topNav">
+				<div class="container">
+
+					<!-- Mobile Menu Button -->
+					<button class="btn btn-mobile" data-toggle="collapse" data-target=".nav-main-collapse">
+						<i class="fa fa-bars"></i>
+					</button>
+
+					<!-- Logo -->
+					<a class="logo pull-left scrollTo" href="#top">
+						<img src="assets/images/soljik-black.png" alt="">
+					</a>
+
+					<div class="navbar-collapse pull-right nav-main-collapse collapse submenu-dark">
+						<nav class="nav-main">
+							<ul id="topMain" class="nav nav-pills nav-main nav-onepage">
+								<li class="">
+									<!-- HOME -->
+									<a href="https://www.naver.com">
+										밀집도 표시
+									</a>
+								</li>
+								<li class="">
+									<!-- SERVICES -->
+									<a href="#">
+										Restapi documentaiton
+									</a>
+								</li>
+							</ul>
+
+						</nav>
+					</div>
+
+				</div>
+			</header>
+			<!-- /Top Nav -->
+
+		</div>
+
+		<!-- map & table -->
+		<section id="middle">
+			<div class="container">
+				<div class="col-lg-6">
+					<input type="text" id="datePicker" class="form-control" value="2019-06-27">
+				</div>
+
+				<div class="col-lg-6">
+					<div class="panel-heading">
+						<span class="title elipsis">
+							<strong>Table</strong> <!-- panel title -->
+						</span>
+					</div>
+
+					<div class="panel-body">
+						<table class="table table-striped table-bordered table-hover" id="sample">
+							<thead>
+								<tr>
+									<th>Day of post</th>
+									<th>Post</th>
+									<th>Location</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>2020.06.13
+									</td>
+									<td>약속
+									</td>
+									<td>수원역
+									</td>
+								</tr>
+								<tr>
+									<td>2020.06.13
+									</td>
+									<td>쇼핑
+									</td>
+									<td>수원롯데몰
+									</td>
+								</tr>
+								<tr>
+									<td>2020.06.13
+									</td>
+									<td>술
+									</td>
+									<td>수원로데오거리
+									</td>
+								</tr>
+								<tr>
+									<td>2020.06.13
+									</td>
+									<td>대중교통
+									</td>
+									<td>수원역
+									</td>
+								</tr>
+								<tr>
+									<td>2020.06.13
+									</td>
+									<td>대중교통
+									</td>
+									<td>수원역
+									</td>
+								</tr>
+								<tr>
+									<td>2020.06.13
+									</td>
+									<td>술
+									</td>
+									<td>수원로데오거리
+									</td>
+								</tr>
+								<tr>
+									<td>2020.06.13
+									</td>
+									<td>쇼핑
+									</td>
+									<td>수원롯데몰
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+
+				<div id="map" class="col-lg-12" style="height: 400px;">
+					<div class="search" style="">
+						<input id="address" type="text" placeholder="검색할 주소" value="불정로 6" />
+						<input id="submit" type="button" value="주소 검색" />
+					</div>
+				</div>
+
+			</div>
+		</section>
+		<!-- map & table -->
+
+		<!-- table -->
+		<section>
+			<div class="container">
+				<div id="panel-5" class="panel panel-default">
+
+					<div class="panel-heading">
+						<span class="title elipsis">
+							<strong>Table</strong> <!-- panel title -->
+						</span>
+
+
+					</div>
+
+					<div class="panel-body">
+						<table class="table table-striped table-bordered table-hover" id="sample">
+							<thead>
+								<tr>
+									<th>Day of post</th>
+									<th>Post</th>
+									<th>Location</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>2020.06.13
+									</td>
+									<td>약속
+									</td>
+									<td>수원역
+									</td>
+								</tr>
+								<tr>
+									<td>2020.06.13
+									</td>
+									<td>쇼핑
+									</td>
+									<td>수원롯데몰
+									</td>
+								</tr>
+								<tr>
+									<td>2020.06.13
+									</td>
+									<td>술
+									</td>
+									<td>수원로데오거리
+									</td>
+								</tr>
+								<tr>
+									<td>2020.06.13
+									</td>
+									<td>대중교통
+									</td>
+									<td>수원역
+									</td>
+								</tr>
+								<tr>
+									<td>2020.06.13
+									</td>
+									<td>대중교통
+									</td>
+									<td>수원역
+									</td>
+								</tr>
+								<tr>
+									<td>2020.06.13
+									</td>
+									<td>술
+									</td>
+									<td>수원로데오거리
+									</td>
+								</tr>
+								<tr>
+									<td>2020.06.13
+									</td>
+									<td>쇼핑
+									</td>
+									<td>수원롯데몰
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+
+
+				</div>
+
+			</div>
+		</section>
+		<!-- table -->
+	</div>
+
+	<!-- JQuery script -->
+	
+	<!-- JAVASCRIPT FILES -->
+	<script type="text/javascript">var plugin_path = 'assets/plugins/';</script>
+	<script type="text/javascript" src="assets/plugins/jquery/jquery-2.2.3.min.js"></script>
+	
+	<!--Asset script -->
+	<script type="text/javascript" src="assets/js/scripts.js"></script>
+
+	<!-- Bootstrap script -->
+	<script src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+
+	<!-- datapicker script -->
+	<script src="assets/plugins/bootstrap.datepicker/js/bootstrap-datepicker.min.js"></script>
+	<script src="assets/plugins/bootstrap.datepicker/locales/bootstrap-datepicker.ko.js"></script>
+
+	<!--map script-->
+	<script src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=5zeynoveif"></script>
+	<script type="text/javascript"
+		src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=5zeynoveif&submodules=geocoder"></script>
+	<script type="text/javascript"
+		src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=5zeynoveif&submodules=Reversegeocode"></script>
+	<script type="text/javascript"
+		src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=5zeynoveif&submodules=panorama"></script>
+	<script type="text/javascript"
+		src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=5zeynoveif&submodules=drawing"></script>
+	<script type="text/javascript"
+		src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=5zeynoveif&submodules=visualization"></script>
+	<script src="https://github.com/navermaps/maps.js/blob/master/docs/scripts/docstrap.lib.js"></script>
+	<!-- map scirpt-->
+
+	<!-- SWIPER SLIDER -->
+	<script type="text/javascript" src="assets/plugins/slider.swiper/dist/js/swiper.min.js"></script>
+	<script type="text/javascript" src="assets/js/view/demo.swiper_slider.js"></script>
+
+	<!-- DATATABLES -->
+	<script type="text/javascript" src="assets/plugins/datatables/js/jquery.dataTables.min.js"></script>
+	<script type="text/javascript" src="assets/plugins/datatables/js/dataTables.tableTools.min.js"></script>
+	<script type="text/javascript" src="assets/plugins/datatables/js/dataTables.colReorder.min.js"></script>
+	<script type="text/javascript" src="assets/plugins/datatables/js/dataTables.scroller.min.js"></script>
+	<script type="text/javascript" src="assets/plugins/datatables/dataTables.bootstrap.js"></script>
+
+	<!-- select2-->
+	<script type="text/javascript" src="assets/plugins/select2/js/select2.full.min.js"></script>
+
+
+	<!-- controls script -->
+	<script src="js/datapicker-control.js"> </script>
+	<script src="js/navermaps-control.js"></script>
+	<script src="js/datatable-control.js"></script>
+</body>
+
+</html>
