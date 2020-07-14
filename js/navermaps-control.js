@@ -50,6 +50,7 @@ function searchCoordinateToAddress(latlng) {
 }
 
 function searchAddressToCoordinate(address) {
+
     naver.maps.Service.geocode({
         query: address
     }, function (status, response) {
