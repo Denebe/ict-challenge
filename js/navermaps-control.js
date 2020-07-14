@@ -1,8 +1,6 @@
 
-
-
 var map = new naver.maps.Map("map", {
-    center: new naver.maps.LatLng(37.3595316, 127.1052133),
+    center: new naver.maps.LatLng(37.571188, 126.988340),
     zoom: 15,
     mapTypeControl: true
 });
@@ -114,7 +112,7 @@ function initGeocoder() {
         searchAddressToCoordinate($('#address').val());
     });
 
-    searchAddressToCoordinate('정자동 178-1');
+    searchAddressToCoordinate('종로2가 38-1');
 }
 
 function makeAddress(item) {
