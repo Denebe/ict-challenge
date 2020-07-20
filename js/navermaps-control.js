@@ -194,7 +194,8 @@ naver.maps.onJSContentLoaded = initGeocoder;
 naver.maps.Event.once(map, 'init_stylemap', initGeocoder);
 
 
-//지도에 원 생성
+//지도에 원 생성 https://navermaps.github.io/maps.js/docs/naver.maps.Circle.html
+
 var GREEN_FACTORY1 = new naver.maps.LatLng(37.571188, 126.999500);
 var GREEN_FACTORY2 = new naver.maps.LatLng(37.571188, 126.988340);
 
@@ -202,7 +203,8 @@ var GREEN_FACTORY2 = new naver.maps.LatLng(37.571188, 126.988340);
 var circle1 = new naver.maps.Circle({
     map: map,
     center: GREEN_FACTORY1,
-    radius: 100,
+    radius: 500,
+    strokeWeight:0,
     fillColor: 'crimson',
     fillOpacity: 0.8
 });
@@ -210,7 +212,8 @@ var circle1 = new naver.maps.Circle({
 var circle2 = new naver.maps.Circle({
     map: map,
     center: GREEN_FACTORY2,
-    radius: 100,
+    radius: 500,
+    strokeWeight:0,
     fillColor: 'yellowgreen',
     fillOpacity: 0.8
 });
