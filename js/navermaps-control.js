@@ -193,6 +193,27 @@ function hasAddition(addition) {
 naver.maps.onJSContentLoaded = initGeocoder;
 naver.maps.Event.once(map, 'init_stylemap', initGeocoder);
 
+
+//지도에 원 생성
+var GREEN_FACTORY1 = new naver.maps.LatLng(37.571188, 126.999500);
+var GREEN_FACTORY2 = new naver.maps.LatLng(37.571188, 126.988340);
+
+
+var circle1 = new naver.maps.Circle({
+    map: map,
+    center: GREEN_FACTORY1,
+    radius: 100,
+    fillColor: 'crimson',
+    fillOpacity: 0.8
+});
+
+var circle2 = new naver.maps.Circle({
+    map: map,
+    center: GREEN_FACTORY2,
+    radius: 100,
+    fillColor: 'yellowgreen',
+    fillOpacity: 0.8
+});
 /*
 var map = new naver.maps.Map('map', {
     center: new naver.maps.LatLng(37.266619, 126.999418),
