@@ -12,7 +12,7 @@ function initTable() {
             [5, 15, 20, -1],
             [5, 15, 20, "All"] // change per page values here
         ],
-        "pageLength": 1, // set the initial value,
+        "pageLength": 3, // set the initial value,
         "columnDefs": [{  // set default column settings
             'orderable': false,
             'targets': [0]
