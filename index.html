@@ -34,7 +34,7 @@
 
 	<!-- jquery -->
 	<script src="http://code.jquery.com/jquery-2.2.3.min.js"></script>
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/local/moment.min.js"></script>
 </head>
 
 <body class="enable-animation">
@@ -87,8 +87,8 @@
 				<div class="col-lg-12">
 					<!--input type="text" id="datePicker" class="form-control" value="2019-06-27"-->
 					<!-- DateTimePicker 위젯를 적용하기 위한 TextBox를 선언한다. -->
-					<input id="fromDate" placeholder="Select start date" class="fromDate" name="fromDate" type="text">
-					<input id="toDate" placeholder="Select end date" class="toDate" name="toDate" type="text">
+					<input id="fromDate" placeholder="Select start date" class="fromDate" name="fromDate" type="text" data-date-format="YYYY-MM-DD hh:mm">
+					<input id="toDate" placeholder="Select end date" class="toDate" name="toDate" type="text" data-date-format="YYYY-MM-DD hh:mm">
 				</div>
 
 				<div class="col-lg-12">
@@ -160,9 +160,6 @@
 		<!-- table -->
 		<script type = "text/javascript">
 			function search_buzz_func(){
-				var startDay = Date($('#fromDate').val(), 'YYYY-MM-DDThh:mm:ss.SSS');
-				console.log(startDay);
-				console.log(Date($('#fromDate').val()));
 				var form = {
 					"url": "http://125.187.189.59:9200/instagram-test-*/_search",
 					"method": "POST",
@@ -180,8 +177,8 @@
 								"filter":{
 									"range":{
 										"timestamp":{
-											"gte" : Date($('#fromDate').val()).format('YYYY-MM-DDThh:mm:ss.SSS'),
-											"lte" : Date($('#toDate').val()).format('YYYY-MM-DDThh:mm:ss.SSS')
+											"gte" : moment($('#fromDate').val()).format('YYYY-MM-DDThh:mm:ss.SSS[Z]'),
+											"lte" : moment($('#toDate').val()).format('YYYY-MM-DDThh:mm:ss.SSS[Z]')
 										}
 									}
 								}
