@@ -1,6 +1,6 @@
 function initTable() {
 
-    var table = jQuery('#sample');
+    var table = jQuery('#bottomTable');
 
     /* Fixed header extension: http://datatables.net/extensions/keytable/ */
 
