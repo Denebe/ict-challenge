@@ -31,6 +31,10 @@
 
 	<!-- search css-->
 	<link href="css/search.css" rel="stylesheet" type="text/css" />
+
+	<!-- jquery -->
+	<script src="http://code.jquery.com/jquery-2.2.3.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/local/moment.min.js"></script>
 </head>
 
 <body class="enable-animation">
@@ -83,10 +87,8 @@
 				<div class="col-lg-12">
 					<!--input type="text" id="datePicker" class="form-control" value="2019-06-27"-->
 					<!-- DateTimePicker 위젯를 적용하기 위한 TextBox를 선언한다. -->
-					<input id="fromDate" placeholder="Select start date" class="fromDate" name="fromDate" type="text"
-						data-date-format="YYYY-MM-DD hh:mm" value="2020-06-15 12:00">
-					<input id="toDate" placeholder="Select end date" class="toDate" name="toDate" type="text"
-						data-date-format="YYYY-MM-DD hh:mm" value="2020-06-30 12:00">
+					<input id="fromDate" placeholder="Select start date" class="fromDate" name="fromDate" type="text" data-date-format="YYYY-MM-DD hh:mm">
+					<input id="toDate" placeholder="Select end date" class="toDate" name="toDate" type="text" data-date-format="YYYY-MM-DD hh:mm">
 				</div>
 
 				<div class="col-lg-12">
@@ -134,6 +136,7 @@
 		</section>
 		<!-- map & table -->
 
+
 		<!-- table -->
 		<section>
 			<div class="container">
@@ -156,6 +159,63 @@
 			</div>
 		</section>
 		<!-- table -->
+		<script type = "text/javascript">
+			function search_buzz_func(){
+				var form = {
+					"url": "http://125.187.189.59:9200/instagram-test-*/_search",
+					"method": "POST",
+					"headers": {
+						"Content-Type": "application/json"
+					},
+					"data": JSON.stringify({
+						"query":{
+							"bool":{
+								"must":{
+									"match":{
+										"location":$('#keyword').val(),
+									}
+								},
+								"filter":{
+									"range":{
+										"timestamp":{
+											"gte" : moment($('#fromDate').val()).format('YYYY-MM-DDThh:mm:ss.SSS[Z]'),
+											"lte" : moment($('#toDate').val()).format('YYYY-MM-DDThh:mm:ss.SSS[Z]')
+										}
+									}
+								}
+							}
+						},
+						"size":20,
+						"_source":["timestamp","location","buzz"],
+						"sort":{
+							"timestamp":{
+								"order":"desc"
+							}
+						}
+					})
+				};
+				console.log(form)
+				$.ajax(form)
+				.done(function(res){
+					setInfo($(res.hits.hits));
+				})
+				.fail(function(xhr, status, errorThrown){
+					console.log("xhr : ", xhr);
+					console.log("Status : ", status);
+					console.log("errorThrown : ", errorThrown);
+				})
+				
+			}
+			function setInfo(obj){
+				console.log(obj);
+				$('#topTable > tbody').empty();
+				$('#topTable > tbody:last').append('<tr><td>'+  $('#keyword').val() +'</td><td>'+ obj.length +'</td></tr>');
+				$('#bottomTable > tbody').empty();
+				for(i = 0; i < obj.length; i ++){
+					$('#bottomTable > tbody:last').append('<tr><td>'+ obj[i]._source.timestamp +'</td><td>'+ $('#keyword').val() +'</td><td>'+ obj[i]._source.buzz +'</td></tr>');
+				}
+			}
+		</script>
 	</div>
 	<!-- table -->
 
