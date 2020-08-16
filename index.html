@@ -83,13 +83,15 @@
 				<div class="col-lg-12">
 					<!--input type="text" id="datePicker" class="form-control" value="2019-06-27"-->
 					<!-- DateTimePicker 위젯를 적용하기 위한 TextBox를 선언한다. -->
-					<input id="fromDate" placeholder="Select start date" class="fromDate" name="fromDate" type="text">
-					<input id="toDate" placeholder="Select end date" class="toDate" name="toDate" type="text">
+					<input id="fromDate" placeholder="Select start date" class="fromDate" name="fromDate" type="text"
+						data-date-format="YYYY-MM-DD hh:mm" value="2020-06-15 12:00">
+					<input id="toDate" placeholder="Select end date" class="toDate" name="toDate" type="text"
+						data-date-format="YYYY-MM-DD hh:mm" value="2020-06-30 12:00">
 				</div>
 
 				<div class="col-lg-12">
 					<div class="table-responsive">
-						<table class="table table-bordered table-striped">
+						<table class="table table-bordered table-striped" id="topTable">
 							<thead>
 								<tr>
 									<th>위치</th>
@@ -98,8 +100,8 @@
 							</thead>
 							<tbody>
 								<tr>
-									<td>탑골공원</td>
-									<td>144</td>
+									<td>N/A</td>
+									<td>N/A</td>
 								</tr>
 							</tbody>
 						</table>
@@ -107,12 +109,13 @@
 				</div>
 
 				<div class="map_wrap">
-					<div id="map" class="col-lg-12" style="height: 400px; position: relative; overflow: hidden; z-index: 22;">
+					<div id="map" class="col-lg-12"
+						style="height: 400px; position: relative; overflow: hidden; z-index: 22;">
 						<div id="menu_wrap" class="bg_white" style="z-index: 100;">
 							<div class="option">
 								<div>
 									<form onsubmit="searchPlaces(); return false;">
-										키워드 : <input type="text" value="이태원 맛집" id="keyword" size="15">
+										키워드 : <input type="text" value="청계천" id="keyword" size="15">
 										<button type="submit">검색하기</button>
 									</form>
 								</div>
@@ -120,7 +123,7 @@
 							<hr>
 							<ul id="placesList"></ul>
 							<div id="pagination"></div>
-						</div>	
+						</div>
 						<!--div class="search" style="">
 						<input id="address" type="text" placeholder="검색할 주소" value="종로 99" />
 						<input id="submit" type="button" value="주소 검색" />
@@ -137,7 +140,7 @@
 				<div class="col-lg-12">
 					<div id="panel-5" class="panel panel-default">
 						<div class="panel-body">
-							<table class="table table-striped table-bordered table-hover" id="sample">
+							<table class="table table-striped table-bordered table-hover" id="bottomTable">
 								<thead>
 									<tr>
 										<th>발생 시간</th>
@@ -145,98 +148,20 @@
 										<th>버즈 내용</th>
 									</tr>
 								</thead>
-								<tbody>
-									<tr>
-										<td>2020.07.07
-										</td>
-										<td>탑골공원
-										</td>
-										<td>술과 음식이 다양해서 좋은 #파쇼<br>
-											#피맥 시작으로 두툼한 스테이크까지<br>
-											맛있는 음식 먹으며 스트레스 팍팍 풀기 !
-										</td>
-									</tr>
-									<tr>
-										<td>2020.07.07
-										</td>
-										<td>탑골공원
-										</td>
-										<td>지금‥ 이 순간~<br>
-											익선동 나들이~<br>
-											#지금이순간 #생활의발견 #소확행 #평범한하루 #소소한일상 #여유로움 #편안함 #쉼 #힐링 #해피 #2020년 #여름 #7월<br>
-											#생활속거리유지 #마스크착용은필수 #종로 #종로3가 #탑골공원 #낙원악기상가 #익선동 #한옥거리
-										</td>
-									</tr>
-									<tr>
-										<td>2020.07.07
-										</td>
-										<td>탑골공원
-										</td>
-										<td>#하늘마루역사이야기 #하늘마루 #역사 #이야기 #보물3호 #보물 #서울 #원각사지 #대원각사비 #탑골공원
-										</td>
-									</tr>
-									<tr>
-										<td>2020.07.07
-										</td>
-										<td>탑골공원
-										</td>
-										<td>#다이나믹듀오 #Lydiapaek - 있어줘(#2015)<br>
-											무리라고 느꼈겠지<br>
-											다들 우리 둘이<br>
-											근데 우린 무리 뉴처럼 특별해<br>
-											깼지 물리의 법칙
-										</td>
-									</tr>
-									<tr>
-										<td>2020.07.07
-										</td>
-										<td>탑골공원
-										</td>
-										<td> #천하장사#힘유진 #탑골공원<br>
-											#노래테이프 #옛날노래 #빈티지인테리어 #빈티지소품 #근현대사 #근대사 #90년대가요 #옛노래 #카세트테이프 #8090 #7080<br>
-											#옛날테이프 #추억노래 #음악테이프 #테이프꽂이 #옛날소품 #빈티지소품 #탑골노래 #탑골가요 #탑골공원 #200707플라타노스
-										</td>
-									</tr>
-									<tr>
-										<td>2020.07.06
-										</td>
-										<td>탑골공원
-										</td>
-										<td>#임재범 #박정현 - 사랑보다 깊은 상처(#1998)<br>
-											추억을 버리긴 너무나 아쉬워<br>
-											난 너를 기억해 이젠 말할께<br>
-											나의 오랜 기다림<br>
-											너 떠나고 너의 미소 볼 수 없지만 항상 기억할께<br>
-											너의 그 모든 걸 사랑보다 깊은 상처만 준 난 이젠 깨달았어<br>
-											후회하고 있다는걸
-										</td>
-									</tr>
-									<tr>
-										<td>2020.07.06
-										</td>
-										<td>탑골공원
-										</td>
-										<td>혜은이언니(?)가 생각나네.<br>
-											안개속에서. 나는울었어.<br>
-											외로워서.한참을 울었어.<br>
-											#열정#18번#탑골공원#목소리야돌아와<br>
-											#부산여자#간호사#RN#미미#mimi<br>
-											#내사진#셀카#셀피#널스타그램#일상#데일리#좋아요#좋반#좋테#좋아요반사#좋아요테러#인친해요#선팔은댓글#DM잘안봐요#소통댓글좋아요
-										</td>
-									</tr>
-								</tbody>
+								<tbody></tbody>
 							</table>
 						</div>
 					</div>
 				</div>
-
 			</div>
 		</section>
 		<!-- table -->
 	</div>
+	<!-- table -->
 
 
 	<!-- JQuery script -->
+	<script type="text/javascript" src="https://github.com/moment/moment/blob/develop/src/moment.js"></script>
 
 	<!-- JAVASCRIPT FILES -->
 	<script type="text/javascript">var plugin_path = 'assets/plugins/';</script>
@@ -255,21 +180,6 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.0/locale/ko.js"></script>
 	<script src="assets/plugins/bootstrap-datetimepicker.js"></script>
 
-	<!--map script-->
-	<script src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=5zeynoveif"></script>
-	<script type="text/javascript"
-		src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=5zeynoveif&submodules=geocoder"></script>
-	<script type="text/javascript"
-		src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=5zeynoveif&submodules=Reversegeocode"></script>
-	<script type="text/javascript"
-		src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=5zeynoveif&submodules=panorama"></script>
-	<script type="text/javascript"
-		src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=5zeynoveif&submodules=drawing"></script>
-	<script type="text/javascript"
-		src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=5zeynoveif&submodules=visualization"></script>
-	<script src="https://github.com/navermaps/maps.js/blob/master/docs/scripts/docstrap.lib.js"></script>
-	<!-- map scirpt-->
-
 	<!-- SWIPER SLIDER -->
 	<script type="text/javascript" src="assets/plugins/slider.swiper/dist/js/swiper.min.js"></script>
 	<script type="text/javascript" src="assets/js/view/demo.swiper_slider.js"></script>
@@ -285,15 +195,19 @@
 	<script type="text/javascript" src="assets/plugins/select2/js/select2.full.min.js"></script>
 
 
+	<!--kakao map script-->
 	<script type="text/javascript"
-		src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=8568a255b6f0fef0b808ee71c586432d&libraries=services"></script>
+		src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=8568a255b6f0fef0b808ee71c586432d&libraries=services,clusterer,drawing"></script>
+	<script type="text/javascript"
+		src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=8568a255b6f0fef0b808ee71c586432d&libraries=LIBRARY"></script>
 
 
 
 	<!-- controls script -->
 	<script src="js/datapicker-control.js"> </script>
-	<script src="js/navermaps-control.js"></script>
 	<script src="js/datatable-control.js"></script>
+	<script src="js/kakaomaps-control.js"></script>
+
 </body>
 
 </html>
