@@ -3,8 +3,8 @@ var markers = [];
 
 var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
     mapOption = {
-        center: new kakao.maps.LatLng(36.2683, 127.6358), // 지도의 중심좌표
-        level: 14 // 지도의 확대 레벨
+        center: new kakao.maps.LatLng(37.5665, 126.9780), // 지도의 중심좌표
+        level: 10 // 지도의 확대 레벨
     };
 
 // 지도를 생성합니다    
@@ -46,7 +46,7 @@ function search_buzz_func(data) {
                     }
                 }
             },
-            "size": 20,
+            "size": 500,
             "_source": ["timestamp", "location", "buzz"],
             "sort": {
                 "timestamp": {
@@ -285,43 +285,47 @@ function removeAllChildNods(el) {
 var clusterer = new kakao.maps.MarkerClusterer({
     map: map, // 마커들을 클러스터로 관리하고 표시할 지도 객체 
     averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정 
-    minLevel: 5, // 클러스터 할 최소 지도 레벨 
-    calculator: [5, 10, 20], // 클러스터의 크기 구분 값, 각 사이값마다 설정된 text나 style이 적용된다
+    minLevel: 1, // 클러스터 할 최소 지도 레벨 
+    calculator: [100, 300, 500], // 클러스터의 크기 구분 값, 각 사이값마다 설정된 text나 style이 적용된다
     texts: getTexts, // texts는 ['삐약', '꼬꼬', '꼬끼오', '치멘'] 이렇게 배열로도 설정할 수 있다 
     styles: [{ // calculator 각 사이 값 마다 적용될 스타일을 지정한다
-        width: '30px', height: '30px',
+        width: '100px', height: '100px',
         background: 'rgba(51, 204, 255, .8)',
-        borderRadius: '15px',
+        borderRadius: '50px',
         color: '#000',
         textAlign: 'center',
         fontWeight: 'bold',
+        opacity: '0.8',
         lineHeight: '31px'
     },
     {
-        width: '40px', height: '40px',
+        width: '150px', height: '150px',
         background: 'rgba(255, 153, 0, .8)',
-        borderRadius: '20px',
+        borderRadius: '75px',
         color: '#000',
         textAlign: 'center',
         fontWeight: 'bold',
+        opacity: '0.8',
         lineHeight: '41px'
     },
     {
-        width: '50px', height: '50px',
+        width: '200px', height: '200px',
         background: 'rgba(255, 51, 204, .8)',
-        borderRadius: '25px',
+        borderRadius: '100px',
         color: '#000',
         textAlign: 'center',
         fontWeight: 'bold',
+        opacity: '0.8',
         lineHeight: '51px'
     },
     {
-        width: '60px', height: '60px',
+        width: '300px', height: '300px',
         background: 'rgba(255, 80, 80, .8)',
-        borderRadius: '30px',
+        borderRadius: '150px',
         color: '#000',
         textAlign: 'center',
         fontWeight: 'bold',
+        opacity: '0.8',
         lineHeight: '61px'
     }
     ]
