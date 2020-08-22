@@ -35,8 +35,8 @@ $(function () {
         $('.toDate').datepicker('setStartDate', startDate);
     }).on('clearDate', function (selected) {
         $('.toDate').datepicker('setStartDate', null);
-    });
-    /*.on("changeDate", function (e) {
+    })
+    .on("changeDate", function (e) {
            //이벤트의 종류
            //show : datePicker가 보이는 순간 호출
            //hide : datePicker가 숨겨지는 순간 호출
@@ -53,7 +53,7 @@ $(function () {
            // 추후에 yyyy-mm-dd 형태로 변경하는 코드를 업로드 하겠습니다. 
            //datepicker end
        });
-       */
+       
 
     $('#toDate').datetimepicker({
         //format: "yyyy-mm-dd",	//데이터 포맷 형식(yyyy : 년 mm : 월 dd : 일 )
@@ -88,8 +88,8 @@ $(function () {
         $('.fromDate').datepicker('setEndDate', endDate);
     }).on('clearDate', function (selected) {
         $('.fromDate').datepicker('setEndDate', null);
-    });
-    /*
+    })
+    
     .on("changeDate", function (e) {
         //이벤트의 종류
         //show : datePicker가 보이는 순간 호출
@@ -107,5 +107,4 @@ $(function () {
         // 추후에 yyyy-mm-dd 형태로 변경하는 코드를 업로드 하겠습니다. 
         //datepicker end
     });
-*/
 });

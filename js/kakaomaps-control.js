@@ -290,7 +290,7 @@ var clusterer = new kakao.maps.MarkerClusterer({
     texts: getTexts, // texts는 ['삐약', '꼬꼬', '꼬끼오', '치멘'] 이렇게 배열로도 설정할 수 있다 
     styles: [{ // calculator 각 사이 값 마다 적용될 스타일을 지정한다
         width: '100px', height: '100px',
-        background: 'rgba(51, 204, 255, .8)',
+        background: 'rgba(55, 255, 106, .8)',
         borderRadius: '50px',
         color: '#000',
         textAlign: 'center',
@@ -300,7 +300,7 @@ var clusterer = new kakao.maps.MarkerClusterer({
     },
     {
         width: '150px', height: '150px',
-        background: 'rgba(255, 153, 0, .8)',
+        background: 'rgba(255, 127, 0, .8)',
         borderRadius: '75px',
         color: '#000',
         textAlign: 'center',
@@ -310,23 +310,13 @@ var clusterer = new kakao.maps.MarkerClusterer({
     },
     {
         width: '200px', height: '200px',
-        background: 'rgba(255, 51, 204, .8)',
+        background: 'rgba(255, 82, 82, .8)',
         borderRadius: '100px',
         color: '#000',
         textAlign: 'center',
         fontWeight: 'bold',
         opacity: '0.8',
         lineHeight: '51px'
-    },
-    {
-        width: '300px', height: '300px',
-        background: 'rgba(255, 80, 80, .8)',
-        borderRadius: '150px',
-        color: '#000',
-        textAlign: 'center',
-        fontWeight: 'bold',
-        opacity: '0.8',
-        lineHeight: '61px'
     }
     ]
 });
