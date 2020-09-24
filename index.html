@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 	<meta charset="utf-8" />
 	<title>SOLJIK</title>
@@ -30,6 +31,10 @@
 
 	<!-- search css-->
 	<link href="css/search.css" rel="stylesheet" type="text/css" />
+
+	<link href="css/morris-0.4.3.min.css" rel="stylesheet">
+
+
 
 </head>
 
@@ -130,6 +135,22 @@
 		</section>
 		<!-- map & table -->
 
+		<!-- Graph-->
+		<section>
+			<div class="container">
+				<div class="col-lg-12">
+					<div class="ibox float-e-margins">
+						<div class="ibox-title">
+							<h3>인구 밀집도 시각화 그래프 </h3>
+						</div>
+						<div class="ibox-content">
+							<div id="morris-one-line-chart"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!--Graph-->
 
 		<!-- table -->
 		<section>
@@ -194,7 +215,13 @@
 
 	<!-- select2-->
 	<script type="text/javascript" src="assets/plugins/select2/js/select2.full.min.js"></script>
+	
+	<!-- Morris -->
+	<script src="js/graph/raphael-2.1.0.min.js"></script>
+	<script src="js/graph/morris.js"></script>
 
+	<!-- Morris demo data-->
+	<script src="js/graph/morris-demo.js"></script>
 
 	<!--kakao map script-->
 	<script type="text/javascript"
