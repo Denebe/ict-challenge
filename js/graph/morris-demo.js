@@ -1,5 +1,5 @@
 $(function() {
-
+    //이 부분 수정
     Morris.Line({
         element: 'morris-one-line-chart',
             data: [
