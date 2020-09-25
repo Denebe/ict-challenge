@@ -21,7 +21,7 @@ var infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
 // 키워드로 장소를 검색합니다
 searchPlaces();
 
-function search_buzz_func(data) {
+function setForm(gte, lte){
     var form = {
         "url": "http://125.187.189.59:9200/instagram-test-*/_search",
         "method": "POST",
@@ -39,8 +39,8 @@ function search_buzz_func(data) {
                     "filter": {
                         "range": {
                             "timestamp": {
-                                "gte": moment($('#fromDate').val()).format('YYYY-MM-DDThh:mm:ss.SSS[Z]'),
-                                "lte": moment($('#toDate').val()).format('YYYY-MM-DDThh:mm:ss.SSS[Z]')
+                                "gte": gte,
+                                "lte": lte
                             }
                         }
                     }
@@ -55,10 +55,19 @@ function search_buzz_func(data) {
             }
         })
     };
+    return form
+}
+
+function search_buzz_func(data) {
+    var gte = moment($('#fromDate').val()).format('YYYY-MM-DDThh:mm:ss.SSS[Z]')
+    var lte = moment($('#toDate').val()).format('YYYY-MM-DDThh:mm:ss.SSS[Z]')
+    var form = setForm(gte, lte)
+
     $.ajax(form)
-        .done(function (res) {
+        .done(function (res) {         
             setInfo($(res.hits.hits));
             displayPlaces(data, res.hits.hits.length);
+            //setChartData();
         })
         .fail(function (xhr, status, errorThrown) {
             console.log("xhr : ", xhr);
@@ -67,6 +76,46 @@ function search_buzz_func(data) {
         })
 
 }
+
+function rateOfrise(end, base, day){
+    var rate = Math.pow(end/base, 1/day) - 1    
+    return end * rate
+}
+
+function setChartData() {
+    var base = 0
+    var data = []
+    var diff = moment($('#toDate').val()).diff(moment($('#fromDate').val()))
+    console.log(moment($('#fromDate').val()))
+    console.log(moment($('#toDate').val()))
+    console.log(diff)
+    for(i = -7; i <= diff; i++){
+        var gte = (moment($('#fromDate').val().substr(0,11)+"00:00:00.000Z").add(i,'d'))
+        var lte = (moment($('#fromDate').val().substr(0,11)+"00:00:00.000Z").add(i+1,'d'))
+        var form = setForm(gte, lte)
+        $.ajax(form)
+        .done(function (res) {
+            date = moment($('#fromDate').val()).add(i,'d').format('YYYY-MM-DD')
+            value = res.hits.hits.length
+            data.push({'date':date, 'value':value})
+            if(i == diff){
+                date = moment($('#toDate').val()).add(1,'d').format('YYYY-MM-DD')
+                value = rateOfrise(value, base, diff+7)
+                data.push({'date':date, 'value':value})
+            } else if (i == 0){
+                base = value
+            }
+        })
+        .fail(function (xhr, status, errorThrown) {
+            console.log("xhr : ", xhr);
+            console.log("Status : ", status);
+            console.log("errorThrown : ", errorThrown);
+        })
+    }
+    console.log(data)
+
+}
+
 function setInfo(obj) {
     console.log(obj);
     $('#topTable > tbody').empty();
@@ -204,7 +253,7 @@ function getListItem(index, places) {
 
 // 마커를 생성하고 지도 위에 마커를 표시하는 함수입니다
 function addMarker(buzz_length, position, idx) {
-
+    var marker
     if (idx == 0) {
         for (var i = 0; i < buzz_length; i++) {
             //var mapObj = kakao.map.Map(mapContainer, {center : new kakao.maps.LatLng(x,y)})
@@ -226,8 +275,6 @@ function addMarker(buzz_length, position, idx) {
     }
     */
     //marker.setVisible(false);
-
-    return marker;
 }
 
 // 지도 위에 표시되고 있는 마커를 모두 제거합니다
