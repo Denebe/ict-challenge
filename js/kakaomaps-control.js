@@ -17,11 +17,10 @@ var ps = new kakao.maps.services.Places();
 
 // 검색 결과 목록이나 마커를 클릭했을 때 장소명을 표출할 인포윈도우를 생성합니다
 var infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
-
 // 키워드로 장소를 검색합니다
 searchPlaces();
 
-function search_buzz_func(data) {
+function setForm(gte, lte){
     var form = {
         "url": "http://125.187.189.59:9200/instagram-test-*/_search",
         "method": "POST",
@@ -39,8 +38,8 @@ function search_buzz_func(data) {
                     "filter": {
                         "range": {
                             "timestamp": {
-                                "gte": moment($('#fromDate').val()).format('YYYY-MM-DDThh:mm:ss.SSS[Z]'),
-                                "lte": moment($('#toDate').val()).format('YYYY-MM-DDThh:mm:ss.SSS[Z]')
+                                "gte": gte,
+                                "lte": lte
                             }
                         }
                     }
@@ -55,10 +54,20 @@ function search_buzz_func(data) {
             }
         })
     };
+    return form;
+}
+
+function search_buzz_func(data) {
+    var gte = moment($('#fromDate').val()).format('YYYY-MM-DDThh:mm:ss.SSS[Z]');
+    var lte = moment($('#toDate').val()).format('YYYY-MM-DDThh:mm:ss.SSS[Z]');
+    var form = setForm(gte, lte);
+
     $.ajax(form)
-        .done(function (res) {
+        .done(function (res) {         
             setInfo($(res.hits.hits));
+            setChartData();
             displayPlaces(data, res.hits.hits.length);
+            
         })
         .fail(function (xhr, status, errorThrown) {
             console.log("xhr : ", xhr);
@@ -67,8 +76,96 @@ function search_buzz_func(data) {
         })
 
 }
+
+function LineFitter()
+{
+       this.count = 0;
+       this.sumX = 0;
+       this.sumX2 = 0;
+       this.sumXY = 0;
+       this.sumY = 0;
+}
+
+LineFitter.prototype = {
+       'add': function(x, y)
+       {
+           this.count++;
+           this.sumX += x;
+           this.sumX2 += x*x;
+           this.sumXY += x*y;
+           this.sumY += y;
+       },
+       'project': function(x)
+       {
+           var det = this.count * this.sumX2 - this.sumX * this.sumX;
+           var offset = (this.sumX2 * this.sumY - this.sumX * this.sumXY) / det;
+           var scale = (this.count * this.sumXY - this.sumX * this.sumY) / det;
+           return parseInt(offset + x * scale);
+       }
+};
+
+function linearProject(data, x)
+{
+       var fitter = new LineFitter();
+       for (var i = 0; i < data.length; i++)
+       {    
+           fitter.add(i, data[i].value);
+       }
+       return fitter.project(x);
+}
+
+function setChart(chartData){
+    new Morris.Line({
+        element: 'morris-one-line-chart',
+        data: chartData,
+        xkey: 'date',
+        ykeys: ['value'],
+        resize: true,
+        lineWidth:4,
+        labels: ['Value'],
+        lineColors: ['#1ab394'],
+        pointSize:5,
+    });
+}
+
+function setChartData() {
+    var base = 0;
+    var startDate = moment($('#fromDate').val()).format('YYYY-MM-DD');
+    var endDate = moment($('#toDate').val()).format('YYYY-MM-DD');
+    var diff = moment(endDate).diff(startDate,'day');
+    var data = new Array;
+    for(i = -7; i <= diff; i++){
+        (
+            function(i){
+                var gte = (moment(startDate+"T00:00:00.000Z").add(i,'d'));
+                var lte = (moment(startDate+"T00:00:00.000Z").add(i+1,'d'));
+                var form = setForm(gte, lte);
+                $.ajax(form)
+                .done(function (res) {
+                    var dateInfo = moment(startDate).add(i,'d').format('YYYY-MM-DD');
+                    var valueInfo = res.hits.hits.length;
+                    data.push({date:dateInfo, value:valueInfo});
+                    if(i == diff){
+                        dateInfo = moment(endDate).add(1,'d').format('YYYY-MM-DD');
+                        valueInfo = linearProject(data,60);
+                        data.push({date:dateInfo, value:valueInfo});
+                        console.log(data)
+                        setChart(data);
+                    } else if (i == 0){
+                        base = valueInfo;
+                    }
+                })
+                .fail(function (xhr, status, errorThrown) {
+                    console.log("xhr : ", xhr);
+                    console.log("Status : ", status);
+                    console.log("errorThrown : ", errorThrown);
+                })
+            }(i)
+        )
+    }
+}
+
 function setInfo(obj) {
-    console.log(obj);
     $('#topTable > tbody').empty();
     $('#topTable > tbody:last').append('<tr><td>' + $('#keyword').val() + '</td><td>' + obj.length + '</td></tr>');
     $('#bottomTable > tbody').empty();
@@ -204,7 +301,7 @@ function getListItem(index, places) {
 
 // 마커를 생성하고 지도 위에 마커를 표시하는 함수입니다
 function addMarker(buzz_length, position, idx) {
-
+    
     if (idx == 0) {
         for (var i = 0; i < buzz_length; i++) {
             //var mapObj = kakao.map.Map(mapContainer, {center : new kakao.maps.LatLng(x,y)})
@@ -226,8 +323,6 @@ function addMarker(buzz_length, position, idx) {
     }
     */
     //marker.setVisible(false);
-
-    return marker;
 }
 
 // 지도 위에 표시되고 있는 마커를 모두 제거합니다
