@@ -134,7 +134,7 @@ function setChartData() {
     var endDate = moment($('#toDate').val()).format('YYYY-MM-DD');
     var diff = moment(endDate).diff(startDate,'day');
     var data = new Array;
-    for(i = -7; i <= diff; i++){
+    for(i = -7; i <= diff+3; i++){
         (
             function(i){
                 var gte = (moment(startDate+"T00:00:00.000Z").add(i,'d'));
@@ -143,16 +143,19 @@ function setChartData() {
                 $.ajax(form)
                 .done(function (res) {
                     var dateInfo = moment(startDate).add(i,'d').format('YYYY-MM-DD');
-                    var valueInfo = res.hits.hits.length;
-                    data.push({date:dateInfo, value:valueInfo});
-                    if(i == diff){
-                        dateInfo = moment(endDate).add(1,'d').format('YYYY-MM-DD');
+                    if(i >= diff){
                         valueInfo = linearProject(data,60);
                         data.push({date:dateInfo, value:valueInfo});
                         console.log(data)
-                        setChart(data);
-                    } else if (i == 0){
-                        base = valueInfo;
+                        if(i == diff+3) {
+                            setChart(data);
+                        }
+                    } else {
+                        var valueInfo = res.hits.hits.length;
+                        data.push({date:dateInfo, value:valueInfo});
+                        if (i == 0){
+                            base = valueInfo;
+                        }
                     }
                 })
                 .fail(function (xhr, status, errorThrown) {
