@@ -1,71 +1,127 @@
-$(function() {
-    //이 부분 수정
-/*
-    Morris.Area({
-        element: 'morris-area-chart',
-        data: [{ period: '2010 Q1', iphone: 2666, ipad: null, itouch: 2647 },
-            { period: '2010 Q2', iphone: 2778, ipad: 2294, itouch: 2441 },
-            { period: '2010 Q3', iphone: 4912, ipad: 1969, itouch: 2501 },
-            { period: '2010 Q4', iphone: 3767, ipad: 3597, itouch: 5689 },
-            { period: '2011 Q1', iphone: 6810, ipad: 1914, itouch: 2293 },
-            { period: '2011 Q2', iphone: 5670, ipad: 4293, itouch: 1881 },
-            { period: '2011 Q3', iphone: 4820, ipad: 3795, itouch: 1588 },
-            { period: '2011 Q4', iphone: 15073, ipad: 5967, itouch: 5175 },
-            { period: '2012 Q1', iphone: 10687, ipad: 4460, itouch: 2028 },
-            { period: '2012 Q2', iphone: 8432, ipad: 5713, itouch: 1791 } ],
-        xkey: 'period',
-        ykeys: ['iphone', 'ipad', 'itouch'],
-        labels: ['iPhone', 'iPad', 'iPod Touch'],
-        pointSize: 2,
-        hideHover: 'auto',
-        resize: true,
-        lineColors: ['#87d6c6', '#54cdb4','#1ab394'],
-        lineWidth:2,
-        pointSize:1,
-    });
-    
 
-    Morris.Donut({
-        element: 'morris-donut-chart',
-        data: [{ label: "Download Sales", value: 12 },
-            { label: "In-Store Sales", value: 30 },
-            { label: "Mail-Order Sales", value: 20 } ],
-        resize: true,
-        colors: ['#87d6c6', '#54cdb4','#1ab394'],
-    });
+function setForm(gte, lte) {
+    var form = {
+        "url": "http://125.187.189.59:9200/instagram-test-*/_search",
+        "method": "POST",
+        "headers": {
+            "Content-Type": "application/json"
+        },
+        "data": JSON.stringify({
+            "query": {
+                "bool": {
+                    "must": {
+                        "match": {
+                            "location": $('#keyword').val(),
+                        }
+                    },
+                    "filter": {
+                        "range": {
+                            "timestamp": {
+                                "gte": gte,
+                                "lte": lte
+                            }
+                        }
+                    }
+                }
+            },
+            "size": 500,
+            "_source": ["timestamp", "location", "buzz"],
+            "sort": {
+                "timestamp": {
+                    "order": "desc"
+                }
+            }
+        })
+    };
+    return form;
+}
 
-    Morris.Bar({
-        element: 'morris-bar-chart',
-        data: [{ y: '2006', a: 60, b: 50 },
-            { y: '2007', a: 75, b: 65 },
-            { y: '2008', a: 50, b: 40 },
-            { y: '2009', a: 75, b: 65 },
-            { y: '2010', a: 50, b: 40 },
-            { y: '2011', a: 75, b: 65 },
-            { y: '2012', a: 100, b: 90 } ],
-        xkey: 'y',
-        ykeys: ['a', 'b'],
-        labels: ['Series A', 'Series B'],
-        hideHover: 'auto',
-        resize: true,
-        barColors: ['#1ab394', '#cacaca'],
-    });
 
-    Morris.Line({
-        element: 'morris-line-chart',
-        data: [{ y: '2006', a: 100, b: 90 },
-            { y: '2007', a: 75, b: 65 },
-            { y: '2008', a: 50, b: 40 },
-            { y: '2009', a: 75, b: 65 },
-            { y: '2010', a: 50, b: 40 },
-            { y: '2011', a: 75, b: 65 },
-            { y: '2012', a: 100, b: 90 } ],
-        xkey: 'y',
-        ykeys: ['a', 'b'],
-        labels: ['Series A', 'Series B'],
-        hideHover: 'auto',
-        resize: true,
-        lineColors: ['#54cdb4','#1ab394'],
-    });
-*/
+function LineFitter() {
+    this.count = 0;
+    this.sumX = 0;
+    this.sumX2 = 0;
+    this.sumXY = 0;
+    this.sumY = 0;
+}
+
+LineFitter.prototype = {
+    'add': function (x, y) {
+        this.count++;
+        this.sumX += x;
+        this.sumX2 += x * x;
+        this.sumXY += x * y;
+        this.sumY += y;
+    },
+    'project': function (x) {
+        var det = this.count * this.sumX2 - this.sumX * this.sumX;
+        var offset = (this.sumX2 * this.sumY - this.sumX * this.sumXY) / det;
+        var scale = (this.count * this.sumXY - this.sumX * this.sumY) / det;
+        return parseInt(offset + x * scale);
+    }
+};
+
+function linearProject(data, x) {
+    var fitter = new LineFitter();
+    for (var i = 0; i < data.length; i++) {
+        fitter.add(i, data[i].value);
+    }
+    return fitter.project(x);
+}
+
+
+var graph = Morris.Line({
+    element: 'morris-one-line-chart',
+    xkey: 'date',
+    ykeys: ['value'],
+    hideHover: 'auto',
+    resize: true,
+    lineWidth: 4,
+    labels: ['Value'],
+    lineColors: ['#1ab394'],
+    pointSize: 5
 });
+
+function setChartData() {
+    var base = 0;
+    var startDate = moment($('#fromDate').val()).format('YYYY-MM-DD');
+    var endDate = moment($('#toDate').val()).format('YYYY-MM-DD');
+    var diff = moment(endDate).diff(startDate, 'day');
+    var data = new Array;
+    for (i = -7; i <= diff + 3; i++) {
+        (
+            function (i) {
+                var gte = (moment(startDate + "T00:00:00.000Z").add(i, 'd'));
+                var lte = (moment(startDate + "T00:00:00.000Z").add(i + 1, 'd'));
+                var form = setForm(gte, lte);
+                $.ajax(form)
+                    .done(function (res) {
+                        var dateInfo = moment(startDate).add(i, 'd').format('YYYY-MM-DD');
+                        if (i >= diff) {
+                            valueInfo = linearProject(data, 5);
+                            if (valueInfo < 0) {
+                                valueInfo = 0;
+                            }
+                            data.push({ date: dateInfo, value: valueInfo });
+                            console.log(data)
+                            if (i == diff + 3) {
+                                //그래프 초기화
+                                graph.setData(data);
+                            }
+                        } else {
+                            var valueInfo = res.hits.hits.length;
+                            data.push({ date: dateInfo, value: valueInfo });
+                            if (i == 0) {
+                                base = valueInfo;
+                            }
+                        }
+                    })
+                    .fail(function (xhr, status, errorThrown) {
+                        console.log("xhr : ", xhr);
+                        console.log("Status : ", status);
+                        console.log("errorThrown : ", errorThrown);
+                    })
+            }(i)
+        )
+    }
+}
