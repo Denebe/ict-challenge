@@ -1,7 +1,14 @@
 // 선언한 TextBox에 DateTimePicker 위젯을 적용한다.
 $(function () {
+    var today = new Date(); // 오늘날짜가 만들어진다.
+    var today1 = new Date();
+    console.log('오늘 날짜  => ' + today);
+
+    today1.setDate(today.getDate() - 7); // 3일을 더하기
+    console.log('7일 전 날짜  => ' + today1);
 
     $('#fromDate').datetimepicker({
+        defaultDate: today1
         //disabledDates : temp
         //format: "yyyy-mm-dd",	//데이터 포맷 형식(yyyy : 년 mm : 월 dd : 일 )
                
@@ -56,6 +63,7 @@ $(function () {
        
 
     $('#toDate').datetimepicker({
+        defaultDate: today
         //format: "yyyy-mm-dd",	//데이터 포맷 형식(yyyy : 년 mm : 월 dd : 일 )
         
         //startDate: '-10d',	//달력에서 선택 할 수 있는 가장 빠른 날짜. 이전으로는 선택 불가능 ( d : 일 m : 달 y : 년 w : 주)
