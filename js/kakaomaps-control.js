@@ -144,7 +144,10 @@ function setChartData() {
                 .done(function (res) {
                     var dateInfo = moment(startDate).add(i,'d').format('YYYY-MM-DD');
                     if(i >= diff){
-                        valueInfo = linearProject(data,60);
+                        valueInfo = linearProject(data,5);
+                        if(valueInfo < 0){
+                            valueInfo = 0;
+                        }
                         data.push({date:dateInfo, value:valueInfo});
                         console.log(data)
                         if(i == diff+3) {
